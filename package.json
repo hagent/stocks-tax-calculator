@@ -1,0 +1,16 @@
+{
+  "name": "stocks_taxes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "taxes_calculator.js",
+  "scripts": {
+    "start": "node ./taxes_calculator.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^2.28.0"
+  }
+}
