@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs'
 import { parse } from 'date-fns'
 
+// todo take it from api
 const stockSplitHistory = {
   // 4-for-1 basis on August 28, 2020
   AAPL: [{
@@ -32,6 +33,7 @@ async function readRatesFile(file) {
 }
 
 async function combineRates() {
+  // from https://www.nbp.pl/home.aspx?f=/kursy/arch_a.html
   const rates = [
     ...await readRatesFile('archiwum_tab_a_2019.csv'),
     ...await readRatesFile('archiwum_tab_a_2020.csv'),
@@ -189,7 +191,8 @@ function calculateStocks(originalStocks) {
       }
     }
     const boughtPrice = sellTransaction.bought.reduce((acc, x) => acc + x.pln * x.boughtShares / x.shares, 0)
-    sellTransaction.income = round(sellTransaction.pln - boughtPrice)
+    sellTransaction.boughtPrice = round(boughtPrice)
+    sellTransaction.income = sellTransaction.pln - boughtPrice
     if (Math.abs(sharesToFind) > 0.0000001) {
       console.log('cound not find shares', sharesToFind, sellTransaction.date.toLocaleDateString(), sellTransaction.company)
     }
